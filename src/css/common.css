@@ -16,3 +16,13 @@ img {
   display: block;
   max-width: 100%;
 }
+
+.field .value {
+  display: block;
+  font-weight: 700;
+}
+.field .label {
+  margin-right: 20px;
+  color: green;
+  font-weight: 700;
+}
