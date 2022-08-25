@@ -7,15 +7,15 @@ const textInput = document.querySelector('#datetime-picker');
 
 const timerEl = document.querySelector('.timer');
 
-// timerEl.style.display = 'flex';
-// timerEl.style.fontSize = '30px';
-// timerEl.style.justifyContent = 'center';
-// timerEl.style.margin = '100px 100px';
-// timerEl.style.color = 'blue';
-// document.body.style.textAlign = 'center';
-// startBtn.style.fontSize = '20px';
-// startBtn.style.cursor = 'pointer';
-// textInput.style.fontSize = '20px';
+timerEl.style.display = 'flex';
+timerEl.style.fontSize = '30px';
+timerEl.style.justifyContent = 'center';
+timerEl.style.margin = '100px 100px';
+timerEl.style.color = 'blue';
+document.body.style.textAlign = 'center';
+startBtn.style.fontSize = '20px';
+startBtn.style.cursor = 'pointer';
+textInput.style.fontSize = '20px';
 
 const refs = {
   days: document.querySelector('[data-days]'),
