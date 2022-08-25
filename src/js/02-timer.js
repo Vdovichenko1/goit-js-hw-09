@@ -7,15 +7,15 @@ const textInput = document.querySelector('#datetime-picker');
 
 const timerEl = document.querySelector('.timer');
 
-timerEl.style.display = 'flex';
-timerEl.style.fontSize = '30px';
-timerEl.style.justifyContent = 'center';
-timerEl.style.margin = '100px 100px';
-timerEl.style.color = 'blue';
-document.body.style.textAlign = 'center';
-startBtn.style.fontSize = '20px';
-startBtn.style.cursor = 'pointer';
-textInput.style.fontSize = '20px';
+// timerEl.style.display = 'flex';
+// timerEl.style.fontSize = '30px';
+// timerEl.style.justifyContent = 'center';
+// timerEl.style.margin = '100px 100px';
+// timerEl.style.color = 'blue';
+// document.body.style.textAlign = 'center';
+// startBtn.style.fontSize = '20px';
+// startBtn.style.cursor = 'pointer';
+// textInput.style.fontSize = '20px';
 
 const refs = {
   days: document.querySelector('[data-days]'),
@@ -24,9 +24,10 @@ const refs = {
   seconds: document.querySelector('[data-seconds]'),
 };
 
-const currentTime = Date.now();
+let intervalId;
 
-let intervalId = null;
+let selectTime;
+startBtn.disabled = true;
 
 const options = {
   enableTime: true,
@@ -35,44 +36,35 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     console.log(selectedDates[0].getTime());
-    if (selectedDates[0].getTime() < currentTime) {
+    selectTime = selectedDates[0];
+    const current = Date.now();
+    if (selectedDates[0].getTime() < current) {
       Notify.warning('Please choose a date in the future');
       startBtn.disabled = true;
     }
-    if (selectedDates[0].getTime() >= currentTime) {
+    if (selectedDates[0].getTime() >= current) {
       startBtn.disabled = false;
     }
   },
 };
 
-// startBtn.addEventListener('click', () => {
-//   intervalId = setInterval(() => {
-//     document.body.style.backgroundColor = getRandomHexColor();
-//   }, 1000);
-// });
-
-const timerDate = {
-  isActive: false,
-  start() {
-    if (this.isActive) {
-      return;
-    }
-    this.isActive = true;
-    setInterval(() => {
-      const deltaTime = intervalId - currentTime;
-      const t = convertMs(deltaTime);
-      updateClockFace(t);
-    }, 1000);
-  },
-};
-
-startBtn.addEventListener('click', () => {
-  timerDate.start();
-});
+function startTimer() {
+  startBtn.disabled = true;
+  textInput.disabled = true;
+  intervalId = setInterval(() => {
+    const currentTime = Date.now();
+    const deltaTime = selectTime - currentTime;
+    const timeObj = convertMs(deltaTime);
+    updateClockFace(timeObj);
+  }, 1000);
+  setTimeout(() => {
+    clearInterval(intervalId);
+  }, selectTime - Date.now());
+}
 
 flatpickr(textInput, options);
 
-//////////////////////////////
+startBtn.addEventListener('click', startTimer);
 
 function updateClockFace({ days, hours, minutes, seconds }) {
   refs.days.textContent = addLeadingZero(days);
@@ -80,6 +72,12 @@ function updateClockFace({ days, hours, minutes, seconds }) {
   refs.minutes.textContent = addLeadingZero(minutes);
   refs.seconds.textContent = addLeadingZero(seconds);
 }
+
+// for (let key in objTime) {
+//   document.querySelector(`*[data-${key}]`).textContent = addLeadingZero(
+//     objTime[key]
+//   );
+// }
 
 function addLeadingZero(value) {
   return String(value).padStart(2, '0');
