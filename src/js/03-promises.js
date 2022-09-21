@@ -23,3 +23,9 @@ createPromise(2, 1500)
   .catch(({ position, delay }) => {
     Notify.warning(`❌ Rejected promise ${position} in ${delay}ms`);
   });
+
+
+
+
+
+
