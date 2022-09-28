@@ -14,10 +14,14 @@ function promiseEl(e) {
   for (let i = 1; i <= amountEl; i++) {
     createPromise(i, delayEl)
       .then(({ position, delay }) => {
-        Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
+        Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`, {
+          position: 'center-center',
+        });
       })
       .catch(({ position, delay }) => {
-        Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
+        Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`, {
+          position: 'center-center',
+        });
       });
     delayEl += stepEl;
   }
